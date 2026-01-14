@@ -63,4 +63,49 @@ FROM `teachers`
 WHERE `phone` IS NULL;
 
 
+BONUS
+
+Contare quanti iscritti ci sono stati ogni anno
+
+SELECT COUNT(`id`)
+FROM `students` 
+GROUP BY YEAR(`enrolment_date`) 
+
+in ordine per anno:
+
+SELECT YEAR(`enrolment_date`) AS `enrolment_year`,
+COUNT(`id`)
+FROM `students` 
+GROUP BY YEAR(`enrolment_date`) 
+ORDER BY `enrolment_year`;
+
+
+//////////////////////////////////////////////////////
+
+Contare gli insegnanti che hanno l'ufficio nello stesso edificio
+
+SELECT `office_number` as `office`,
+COUNT(id) 
+from `teachers`
+group by `office_number`
+order by `office`;
+
+//////////////////////////////////////////////////////
+
+Calcolare la media dei voti di ogni appello d'esame
+
+SELECT `exam_id` AS `exam`,
+AVG(`vote`)
+from `exam_student`
+GROUP BY `exam`;
+
+//////////////////////////////////////////////////////
+
+Contare quanti corsi di laurea ci sono per ogni dipartimento
+
+SELECT `department_id` as `department`,
+COUNT(`id`)
+from `degrees`
+GROUP BY `department`;
+
 */
