@@ -11,7 +11,8 @@ WHERE year(`date_of_birth`) = 1990;
 ```
 SELECT *
 FROM `courses`
-WHERE `cfu` > 10;
+WHERE `cfu` > 10
+ORDER BY `cfu`;
 ```
 
 ## Selezionare tutti gli studenti che hanno più di 30 anni
@@ -86,11 +87,20 @@ ORDER BY `enrolment_year`;
 ## Contare gli insegnanti che hanno l'ufficio nello stesso edificio
 
 ```
-SELECT `office_number`,
+SELECT `office_address`,
 COUNT(id) as `teachers_count` 
 FROM `teachers`
-GROUP BY `office_number`
-ORDER BY `office_number`;
+GROUP BY `office_address`;
+```
+
+uffici con solo un insegnate:
+
+```
+SELECT `office_address`,
+COUNT(id) as `teachers_count` 
+FROM `teachers`
+GROUP BY `office_address`
+HAVING `teachers_count` = 1;
 ```
 
 ## Calcolare la media dei voti di ogni appello d'esame
