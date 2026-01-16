@@ -67,7 +67,7 @@ FROM teachers
 INNER JOIN course_teacher
 ON teachers.id = course_teacher.teacher_id
 INNER JOIN courses
-ON course_teacher.course_id
+ON course_teacher.course_id = courses.id
 INNER JOIN degrees
 ON courses.degree_id = degrees.id
 INNER JOIN departments
@@ -78,10 +78,18 @@ GROUP BY teachers.id
 
 ## BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per superare ciascuno dei suoi esami
 
+correzione: 
 ```
-SELECT students.id, students.name, students.surname, COUNT(exam_student.exam_id) AS exam_count 
-FROM exam_student 
-INNER JOIN students 
-ON exam_student.student_id = students.id 
-GROUP BY students.id;
+SELECT students.id, students.name, students.surname, COUNT(exam_student.vote), MAX(exam_student.vote), courses.id, courses.name
+FROM students
+INNER JOIN exam_student
+ON students.id = exam_student.student_id
+INNER JOIN exams 
+ON exams.id = exam_student.exam_id
+INNER JOIN courses
+ON exams.course_id = courses.id
+GROUP BY students.id, courses.id 
+HAVING MAX(exam_student.vote) >= 18
+ORDER BY students.id
+
 ```
